@@ -1,0 +1,6 @@
+group:
+  - files:
+    - source: tools/sre_file_sync/s3-backup.yml
+      dest: .github/workflows/s3-backup.yml
+    repos: |
+      cds-snc/sre_test_repo

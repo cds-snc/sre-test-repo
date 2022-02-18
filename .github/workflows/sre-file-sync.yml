@@ -1,0 +1,46 @@
+name: Sync SRE files
+on: 
+  workflow_dispatch:
+
+jobs:
+  sync_backup_workflow:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: impersonate SRE Read/Write GH App
+        uses: tibdex/github-app-token@7ce9ffdcdeb2ba82b01b51d6584a6a85872336d4
+        id: generate_token
+        with:
+          app_id: ${{ secrets.SRE_READWRITE_APP_ID }}
+          private_key: ${{ secrets.SRE_READWRITE_APP_PRIVATE_KEY }}
+      - name: Sync SRE Workflows
+        uses: BetaHuhn/repo-file-sync-action@878d649c33c834dc1eff4c00f7fcf16bf281eb63
+        with:
+          GH_INSTALLATION_TOKEN: ${{ steps.generate_token.outputs.token }}
+          CONFIG_PATH: tools/sre_file_sync/sync.yml
+          ASSIGNEES: CalvinRodo
+          COMMIT_PREFIX: "chore: "
+          PR_BODY: "## Description  
+          
+                  Hello this is an automated PR from the Internal SRE Team.  
+
+                  This PR will sync some workflows that fill perform some important organizational requirements so that you don't have to.  
+
+                  ## Workflows being synced  
+
+                  The following is a list of workflows that are being synced by this action.  
+
+                  ### s3-backup.yml  
+
+                  This workflow will take shallow copy of the current state of your repo, zip that up and upload it to an s3 bucket in the SRE Tools AWS Account. This is a disaster recovery action that we are taking in the very slim chance that Github dissapears along with all of the copies of your repo on developer machines.
+
+                  ## Important Information  
+
+                  This PR should have zero impact on the functionality of your system and should be safe to merge without testing your application.  
+
+                  **Please Note:** You do not have to merge this PR if you wish to be exempt from this sync please contact internal sre through slack and we will remove your repo from the list of repos to sync. Be aware however that if you do this you will need to implement this functionality yourself."
+          GIT_EMAIL: sre-and-tech-ops@cds-snc.ca
+          GIT_USERNAME: CalvinRodo
+
+
+
