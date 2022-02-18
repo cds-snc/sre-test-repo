@@ -1,0 +1,19 @@
+name: Sync SRE files PAT
+on: 
+  workflow_dispatch:
+
+jobs:
+  sync_backup_workflow_pat:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Sync SRE Workflows
+        uses: BetaHuhn/repo-file-sync-action@878d649c33c834dc1eff4c00f7fcf16bf281eb63
+        with:
+          CONFIG_PATH: tools/sre_file_sync/sync.yml
+          ASSIGNEES: CalvinRodo
+          COMMIT_PREFIX: "pat: "
+          GH_PAT: ${{ secrets.TEST_PAT }}
+
+
+
