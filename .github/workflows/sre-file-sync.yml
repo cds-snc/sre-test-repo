@@ -14,7 +14,8 @@ jobs:
           app_id: ${{ secrets.SRE_READWRITE_APP_ID }}
           private_key: ${{ secrets.SRE_READWRITE_APP_PRIVATE_KEY }}
       - name: Sync SRE Workflows
-        uses: BetaHuhn/repo-file-sync-action@878d649c33c834dc1eff4c00f7fcf16bf281eb63
+        #uses: BetaHuhn/repo-file-sync-action@878d649c33c834dc1eff4c00f7fcf16bf281eb63
+        uses: alvarezfr/repo-file-sync-action@fix/verified_commits
         with:
           GH_INSTALLATION_TOKEN: ${{ steps.generate_token.outputs.token }}
           CONFIG_PATH: tools/sre_file_sync/sync.yml
