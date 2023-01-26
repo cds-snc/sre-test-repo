@@ -8,7 +8,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Sync SRE Workflows
-        uses: BetaHuhn/repo-file-sync-action@878d649c33c834dc1eff4c00f7fcf16bf281eb63
+        #uses: BetaHuhn/repo-file-sync-action@878d649c33c834dc1eff4c00f7fcf16bf281eb63
+        uses: alvarezfr/repo-file-sync-action@fix/verified_commits
         with:
           CONFIG_PATH: tools/sre_file_sync/sync.yml
           ASSIGNEES: CalvinRodo
